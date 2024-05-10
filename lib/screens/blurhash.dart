@@ -36,7 +36,7 @@ class _BlurHashPackageState extends State<BlurHashPackage> {
         child: Column(
           children: [
             BlurHashCard(
-                blurHash: 'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
+                blurHash: 'L371cr_3RKKFsqICIVNG00eR?d-r',
                 title: 'Nature',
                 subtitle: 'Landscape')
           ],

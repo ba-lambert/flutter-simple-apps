@@ -24,7 +24,7 @@ class _BlurHashCardState extends State<BlurHashCard> {
   void initState() {
     super.initState();
     // Simulate image loading after 3 seconds
-    _imageFuture = Future.delayed(Duration(seconds: 3), () {
+    _imageFuture = Future.delayed(Duration(seconds: 3000), () {
       // Return a placeholder URL or actual image URL based on your requirement
       return 'https://i.ytimg.com/vi/T7CJg6rfki4/hqdefault.jpg'; // Placeholder URL
     });
@@ -42,12 +42,14 @@ class _BlurHashCardState extends State<BlurHashCard> {
             aspectRatio: 16 / 9,
             child: FutureBuilder<String>(
               future: _imageFuture,
+              // Inside the FutureBuilder's builder method
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   // Show loading indicator while waiting for the image
                   return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   // Handle error if image fails to load
+                  print('Error loading image: ${snapshot.error}');
                   return Center(child: Text('Error loading image'));
                 } else {
                   // Show the BlurHash or actual image once loaded
