@@ -1,4 +1,5 @@
 // blurhash.dart
+import 'package:blurhash/widgets/BlueHashCard.dart';
 import 'package:flutter/material.dart';
 
 class BlurHashPackage extends StatefulWidget {
@@ -33,7 +34,12 @@ class _BlurHashPackageState extends State<BlurHashPackage> {
       ),
       body: const SingleChildScrollView(
         child: Column(
-          children: [],
+          children: [
+            BlurHashCard(
+                blurHash: 'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
+                title: 'Nature',
+                subtitle: 'Landscape')
+          ],
         ),
       ),
     );
