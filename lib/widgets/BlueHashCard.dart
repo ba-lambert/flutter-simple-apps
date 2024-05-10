@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 
-class BlurHashCard extends StatelessWidget {
+class BlurHashCard extends StatefulWidget {
   final String blurHash;
   final String title;
   final String subtitle;
@@ -14,6 +14,23 @@ class BlurHashCard extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<BlurHashCard> createState() => _BlurHashCardState();
+}
+
+class _BlurHashCardState extends State<BlurHashCard> {
+  late Future<String> _imageFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    // Simulate image loading after 3 seconds
+    _imageFuture = Future.delayed(Duration(seconds: 3), () {
+      // Return a placeholder URL or actual image URL based on your requirement
+      return 'https://i.ytimg.com/vi/T7CJg6rfki4/hqdefault.jpg'; // Placeholder URL
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
@@ -23,9 +40,22 @@ class BlurHashCard extends StatelessWidget {
         children: [
           AspectRatio(
             aspectRatio: 16 / 9,
-            child: BlurHash(
-              hash: blurHash,
-              imageFit: BoxFit.cover,
+            child: FutureBuilder<String>(
+              future: _imageFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  // Show loading indicator while waiting for the image
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  // Handle error if image fails to load
+                  return Center(child: Text('Error loading image'));
+                } else {
+                  // Show the BlurHash or actual image once loaded
+                  return snapshot.data != null
+                      ? Image.network(snapshot.data!, fit: BoxFit.cover)
+                      : BlurHash(hash: widget.blurHash, imageFit: BoxFit.cover);
+                }
+              },
             ),
           ),
           Padding(
@@ -34,7 +64,7 @@ class BlurHashCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  widget.title,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -42,7 +72,7 @@ class BlurHashCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  subtitle,
+                  widget.subtitle,
                   style: const TextStyle(fontSize: 16),
                 ),
               ],
