@@ -24,7 +24,7 @@ class _BlurHashCardState extends State<BlurHashCard> {
   void initState() {
     super.initState();
     // Simulate image loading after 3 seconds
-    _imageFuture = Future.delayed(Duration(seconds: 3000), () {
+    _imageFuture = Future.delayed(Duration(seconds: 30), () {
       // Return a placeholder URL or actual image URL based on your requirement
       return 'https://i.ytimg.com/vi/T7CJg6rfki4/hqdefault.jpg'; // Placeholder URL
     });
